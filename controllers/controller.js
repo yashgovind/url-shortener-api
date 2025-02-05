@@ -1,18 +1,15 @@
 const model = require("../models/schema");
-// main logic
 
 const createShortUrl = (async(req,res) => {
     // create the newUrl short one.
-    // 
+    //
     const { shortId:id,url, timeStamp } = req.body;
-    if (!id || !url || !timeStamp) return res.status(404).json("error found");
 
     const newUrl = await model.create({
         id,
         url,
         timeStamp
     });
-
     newUrl.save();
 
     res.status(201).send(newUrl);

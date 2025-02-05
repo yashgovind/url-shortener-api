@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
-// const shorId =  require("nanoid");
+const nanoid = require("../utils/nanoid");
 mongoose.set("strictQuery", true);
 
+const date = Date.now();
 const schema = new mongoose.Schema({
     shorId: {
         type: String,
         required: true,
+        value:nanoid,
     },
     url: {
         type: String,
@@ -13,7 +15,7 @@ const schema = new mongoose.Schema({
     },
     timeStamp: {
         type: Date,
-        required:true,
+        value:date
     }
 })
 
