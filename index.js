@@ -1,11 +1,13 @@
 const express = require("express");
-const app = express();
 require("dotenv").config();
+const mongoose = require("mongoose");
 const router = require("./routes/router");
+
+const app = express();
 const apiPath = process.env.API;
 const port = process.env.PORT || 2000;
-const connectDb = require("./utils/connection");
-const mongoUrl = process.env.URL; 
+
+const mongoUrl = process.env.URL;
 
 // global middlewares.
 app.use(express.urlencoded({ extended: true }));
@@ -13,16 +15,10 @@ app.use(express.json());
 
 app.use(apiPath, router); //router
 
+mongoose.connect(mongoUrl).then(() => {
+  console.log("connected to db");
+});
 
-//  start server and db.
-const start = async () => {
-    await connectDb(mongoUrl, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    });
-    app.listen(port,() => {
-        console.log(`server running at port ${port}`);
-    })
-};
-
-start();
+app.listen(port, () => {
+  console.log(`server running at port ${port}`);
+});

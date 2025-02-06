@@ -1,37 +1,62 @@
 const model = require("../models/schema");
-const nanoid = require("../utils/nanoidconnect");
 
-const createShortUrl = (async(req,res) => {
-    // create the newUrl short one.
-    //
-    const { shortId: id, url, timeStamp } = req.body;
-    console.log(id);
+/**
+  API to create a short URL from a given URL from user.
+  @param  {string} url `required` from user.
+ */
+const createShortUrl = async (req, res) => {
+  try {
+    const { url } = req.body;
+
+    if (!url) return res.status(400).json("URL is required");
+
+    const { nanoid } = await import("nanoid");
+
+    const shortId = nanoid();
+    const timeStamp = Date.now();
 
     const newUrl = await model.create({
-        id,
-        url,
-        timeStamp
+      shortId,
+      url,
+      timeStamp,
     });
+
     newUrl.save();
 
     res.status(201).send(newUrl);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Internal server error");
+  }
+};
 
-    res.redirect("/:id");
-})
- const getShortUrl = (async(req, res) => {
-  // get the short url
-    const {id} = req.params.id;
-   if (!id || !url || !timeStamp) return res.status(404).json("error found");
+/**
+ API to redirect user to the orginal URL based on `shortId`.
 
+ @param  {string} id `required` which is the shortId.
+ */
+const getShortUrl = async (req, res) => {
+  try {
+    // get the short url
+    const id = req.params.id;
 
-    const getUrl = await model.findOne({ id });
+    if (!id) return res.status(400).json("id is required");
 
-   if (!getUrl) return res.status(404).json("error found");
+    const getUrl = await model.findOne({ shortId: id });
 
+    if (!getUrl)
+      return res
+        .status(404)
+        .json("Invalid short id. No stored URL found with this id");
 
-     res.status(200).send(getUrl);
-});
+    res.redirect(301, getUrl.url);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json("Internal server error");
+  }
+};
 
 module.exports = {
-createShortUrl,getShortUrl
+  createShortUrl,
+  getShortUrl,
 };
