@@ -5,8 +5,7 @@ const router = require("./routes/router");
 const apiPath = process.env.API;
 const port = process.env.PORT || 2000;
 const connectDb = require("./utils/connection");
-const mongoUrl = process.env.URL;
-const { nanoid } = require('nanoid'); //=> "L7h_SrMaSEFDjFNnzO5Bn"
+const mongoUrl = process.env.URL; 
 
 // global middlewares.
 app.use(express.urlencoded({ extended: true }));

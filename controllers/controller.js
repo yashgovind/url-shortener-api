@@ -1,9 +1,11 @@
 const model = require("../models/schema");
+const nanoid = require("../utils/nanoidconnect");
 
 const createShortUrl = (async(req,res) => {
     // create the newUrl short one.
     //
-    const { shortId:id,url, timeStamp } = req.body;
+    const { shortId: id, url, timeStamp } = req.body;
+    console.log(id);
 
     const newUrl = await model.create({
         id,
@@ -16,19 +18,18 @@ const createShortUrl = (async(req,res) => {
 
     res.redirect("/:id");
 })
-
-const getShortUrl = (async(req, res) => {
-    // get the short url
+ const getShortUrl = (async(req, res) => {
+  // get the short url
     const {id} = req.params.id;
-    if (!id || !url || !timeStamp) return res.status(404).json("error found");
+   if (!id || !url || !timeStamp) return res.status(404).json("error found");
 
 
     const getUrl = await model.findOne({ id });
 
-    if (!getUrl) return res.status(404).json("error found");
+   if (!getUrl) return res.status(404).json("error found");
 
 
-    res.status(200).send(getUrl);
+     res.status(200).send(getUrl);
 });
 
 module.exports = {
