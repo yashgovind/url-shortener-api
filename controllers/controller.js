@@ -12,7 +12,7 @@ const createShortUrl = async (req, res) => {
 
     const { nanoid } = await import("nanoid");
 
-    const shortId = nanoid();
+    const shortId = nanoid(4);
     const timeStamp = Date.now();
 
     const newUrl = await model.create({
