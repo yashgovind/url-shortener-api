@@ -12,7 +12,7 @@ const createShortUrl = async (req, res) => {
 
     const { nanoid } = await import("nanoid");
 
-    const shortId = nanoid(4);
+    const shortId = nanoid(6);
     const timeStamp = Date.now();
 
     const newUrl = await model.create({
@@ -22,8 +22,9 @@ const createShortUrl = async (req, res) => {
     });
 
     newUrl.save();
+    return res.render("home", { newUrl: url });
+    // res.status(201).json(newUrl);
 
-    res.status(201).send(newUrl);
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal server error");
@@ -37,7 +38,7 @@ const createShortUrl = async (req, res) => {
  */
 const getShortUrl = async (req, res) => {
   try {
-    // get the short url
+    // get the short url id.
     const id = req.params.id;
 
     if (!id) return res.status(400).json("id is required");
