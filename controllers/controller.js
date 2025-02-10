@@ -1,4 +1,8 @@
 const model = require("../models/schema");
+const express = require("express");
+const app = express();
+const path = require("path");
+app.set('views', path.resolve(__dirname,"views","home.ejs"));
 
 /**
   API to create a short URL from a given URL from user.
@@ -7,6 +11,7 @@ const model = require("../models/schema");
 const createShortUrl = async (req, res) => {
   try {
     const { url } = req.body;
+    console.log("request-->", req.body);
 
     if (!url) return res.status(400).json("URL is required");
 
@@ -30,7 +35,7 @@ const createShortUrl = async (req, res) => {
     res.status(500).json("Internal server error");
   }
 };
-
+    
 /**
  API to redirect user to the orginal URL based on `shortId`.
 

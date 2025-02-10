@@ -12,7 +12,7 @@ const mongoUrl = process.env.URL;
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.set('view engine', "ejs"); //for ejs VIEW ENGINE for ssr rendering
-app.set('views', path.resolve("./views"));
+app.set('views', path.resolve(__dirname,"views","home.ejs"));
 
 
 app.use(apiPath, router); //router
