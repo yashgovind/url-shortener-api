@@ -1,17 +1,20 @@
 const model = require("../models/schema");
 const express = require("express");
 const app = express();
-const path = require("path");
-app.set('views', path.resolve(__dirname,"views","home.ejs"));
-
+// global middlewares.
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set('view engine', "ejs")
 /**
   API to create a short URL from a given URL from user.
   @param  {string} url `required` from user.
  */
 const createShortUrl = async (req, res) => {
   try {
-    const { url } = req.body;
-    console.log("request-->", req.body);
+    console.log(req.body); // body is coming
+
+    const {url} = req.body;
+    console.log(req.body.url); // req.body.url is coming as undefined. idk why.
 
     if (!url) return res.status(400).json("URL is required");
 
@@ -25,17 +28,17 @@ const createShortUrl = async (req, res) => {
       url,
       timeStamp,
     });
+    console.log(newUrl);
 
     newUrl.save();
-    return res.render("home", { newUrl: url });
-    // res.status(201).json(newUrl);
+    return res.render("home", { url:newUrl });
 
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal server error");
   }
 };
-    
+
 /**
  API to redirect user to the orginal URL based on `shortId`.
 
@@ -55,7 +58,8 @@ const getShortUrl = async (req, res) => {
         .status(404)
         .json("Invalid short id. No stored URL found with this id");
 
-    res.redirect(301, getUrl.url);
+    res.render("finalpage.ejs", { url: getUrl.url });
+    // res.redirect(301, getUrl.url);
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal server error");

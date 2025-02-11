@@ -23,9 +23,8 @@
 <body>
    <h1>URL SHORTENER</h1>
    <div>
-    <form method="POST" action="/api/shorturl" >
-        <label for="">Enter your Original URL</label>
-        <input type="text" name="url is" placeholder="https://something.com">
+    <form method="get" action="/api/shorturl/<%getUrl %>" >
+      <h1>Short url is : <% getUrl %> for the original url <% newURl %></h1>
         <button type="submit">Generate</button>
     </form>
    </div>
