@@ -11,12 +11,13 @@ app.set('view engine', "ejs")
  */
 const createShortUrl = async (req, res) => {
   try {
-    console.log(req.body); // body is coming
+    // console.log(req.body); // body is coming
 
     const {url} = req.body;
-    console.log(req.body.url); // req.body.url is coming as undefined. idk why.
+    // console.log(req.body.url); // req.body.url is coming as undefined. idk why.
 
     if (!url) return res.status(400).json("URL is required");
+    // console.log(url);
 
     const { nanoid } = await import("nanoid");
 
@@ -28,10 +29,10 @@ const createShortUrl = async (req, res) => {
       url,
       timeStamp,
     });
-    console.log(newUrl);
+    // console.log(newUrl);
 
     newUrl.save();
-    return res.render("home", { url:newUrl });
+    return res.render("redirectedPage",{url,shortId});
 
   } catch (error) {
     console.log(error);
@@ -48,18 +49,18 @@ const getShortUrl = async (req, res) => {
   try {
     // get the short url id.
     const id = req.params.id;
+    console.log(id);
 
     if (!id) return res.status(400).json("id is required");
 
     const getUrl = await model.findOne({ shortId: id });
-
+    console.log(getUrl);
     if (!getUrl)
       return res
         .status(404)
         .json("Invalid short id. No stored URL found with this id");
-
-    res.render("finalpage.ejs", { url: getUrl.url });
-    // res.redirect(301, getUrl.url);
+    
+    res.redirect(301, getUrl.url);
   } catch (error) {
     console.log(error);
     res.status(500).json("Internal server error");
