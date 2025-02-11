@@ -6,14 +6,16 @@
     <title>Document</title>
     <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
 </head>
-<body class="flex justify-center items-center flex-col">
-   <h1 class="font-bold  text-8xl bg-red-500">URL SHORTENER</h1>
+<body class="flex justify-center items-center flex-col bg-[#2E2E2E]">
+    <div>
+        <h1 class="font-bold  text-8xl h-full  mb-[-80px] my-10 text-[#FAF9F6]">URL SHORTENER</h1>
+    </div>
    <div class="flex items-center justify-center h-screen">
-    <form method="POST" action="/api/shorturl" class = " flex  items-center justify-center mx-auto max-w-sm bg-[#fff4da] px-130 py-20  border border-zinc-900 rounded-lg font-bold">
+    <form method="POST" action="/api/shorturl" class = " flex  items-center justify-center mx-auto max-w-sm bg-[#fff4da] px-130 py-20  border-4 border-gray-500 rounded-lg font-bold  shadow-xl">
         <div class="flex m-10 items-center justify-center">
             <label class="text-center  w-56 m-10 text-4xl">Enter your Original URL</label>
-            <input type="text" name="url" placeholder="https://something.com" id="url" class="border border-zinc-900 rounded-lg px-20 py-10 bg-white-300 text-3xl">
-            <button type="submit" class="bg-[#ffc480] rounded-lg p-[15px] mx-10 text-2xl">Generate</button>
+            <input type="text" name="url" placeholder="https://something.com" id="url" class="border-4 border-zinc-900 rounded-lg px-20 py-10 bg-[#FAF9F6] text-3xl hover:bg-[#E2DFD2]">
+            <button type="submit" class="bg-[#FAF9F6] rounded-lg p-[15px] mx-10 text-2xl cursor-pointer border-4 border-zinc-900 font-bold hover:bg-[#E2DFD2]">Generate</button>
         </div>
     </form>
    </div>

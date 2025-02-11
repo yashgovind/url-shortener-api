@@ -4,14 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Redirect Page</title>
-    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Short URL Found!</h1>
-    <p>The original URL is: <a href="<%=url %>" target="_blank"><%= url %></a></p>
-    <p>The Short URL is: <a href="http://localhost:4500/api/shorturl/<%=shortId %>" target="_blank">
-        http://localhost:4500/<%= shortId %></a></p>
-    </a>
-</p>
+<body class="bg-slate-700 flex items-center justify-center min-h-screen p-4">
+
+    <div class="bg-white shadow-lg rounded-lg p-8 max-w-lg w-full text-center">
+        <h1 class="text-3xl font-bold text-zinc-600 mb-6">Short URL Found!</h1>
+
+        <!-- Original URL Section -->
+        <div class="bg-red-500 text-white rounded-lg p-6 mb-4">
+            <p class="text-xl font-semibold mb-2">The original URL is:</p>
+            <a href="<%= url %>" target="_blank" class="text-lg underline break-words hover:text-blue-800 outline-none">
+                <%= url %>
+            </a>
+        </div>
+
+        <!-- Shortened URL Section -->
+        <div class="bg-blue-500 text-white rounded-lg p-6">
+            <p class="text-xl font-semibold mb-2">The Short URL is:</p>
+            <a href="http://localhost:4500/api/shorturl/<%= shortId %>" target="_blank" class="text-lg underline hover:text-blue-800 outline-none">
+                http://localhost:4500/<%= shortId %>
+            </a>
+        </div>
+    </div>
+
 </body>
 </html>
