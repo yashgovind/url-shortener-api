@@ -11,11 +11,15 @@ const mongoUrl = process.env.URL;
 // global middlewares.
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.set('view engine', "ejs"); //for ejs VIEW ENGINE for ssr rendering
-app.set('views', path.resolve(__dirname,"views","home.ejs"));
-
+app.set("view engine", "ejs"); //for ejs VIEW ENGINE for ssr rendering
+// app.set("views", path.resolve(__dirname, "views", "home.ejs"));
 
 app.use(apiPath, router); //router
+
+// To render the home page view using ejs
+app.get("/home", (req, res) => {
+  res.render("home");
+});
 
 mongoose.connect(mongoUrl).then(() => {
   console.log("connected to db");
